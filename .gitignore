@@ -1,0 +1,6 @@
+develop/
+doc/
+node_modules/
+product/
+dist/
+.vscode/
