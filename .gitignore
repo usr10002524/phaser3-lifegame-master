@@ -4,3 +4,4 @@ node_modules/
 product/
 dist/
 .vscode/
+src/assets/
