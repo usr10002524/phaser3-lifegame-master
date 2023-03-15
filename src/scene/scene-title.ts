@@ -1,4 +1,5 @@
 import { atsumaru_getVolume, atsumaru_onChangeVolume, atsumaru_screenshotHandler, atsumaru_setScreenshoScene } from "../atsumaru/atsumaru";
+import { SoundVolume, SoundVolumeConfig } from "../common/sound-volume";
 import { Consts } from "../consts";
 import { Globals } from "../globals";
 import { Control } from "../life-game/control";
@@ -18,6 +19,8 @@ export class SceneTitle extends Phaser.Scene {
     private resetTimer: Phaser.Time.TimerEvent | null;
     private fade: Phaser.Tweens.Tween | null;
 
+    private soundVolume: SoundVolume | null;
+
     private se: Phaser.Sound.BaseSound | null;
     private bgm: Phaser.Sound.BaseSound | null;
 
@@ -36,6 +39,8 @@ export class SceneTitle extends Phaser.Scene {
         this.lifeGame = null;
         this.resetTimer = null;
         this.fade = null;
+
+        this.soundVolume = null;
 
         this.se = null;
         this.bgm = null;
@@ -64,6 +69,8 @@ export class SceneTitle extends Phaser.Scene {
         this._createTimer();
         this._createSound();
         this._setupDemo();
+
+        this._createSoundVolume();
 
         //スクリーンショット撮影のシーン登録
         atsumaru_setScreenshoScene(this);
@@ -269,6 +276,74 @@ export class SceneTitle extends Phaser.Scene {
         //     this.bgm?.play();
         // }
 
+    }
+
+    private _createSoundVolume(): void {
+        const config: SoundVolumeConfig = {
+            pos: {
+                x: Consts.SoundVolume.Base.Pos.X,
+                y: Consts.SoundVolume.Base.Pos.Y,
+            },
+
+            icon: {
+                atlas: Consts.Assets.Graphic.SoundIcons.Atlas.NAME,
+                frame: {
+                    volume: Consts.Assets.Graphic.SoundIcons.Volume.ON,
+                    mute: Consts.Assets.Graphic.SoundIcons.Mute.ON,
+                },
+                pos: {
+                    x: Consts.SoundVolume.Icon.Pos.X,
+                    y: Consts.SoundVolume.Icon.Pos.Y,
+                },
+                scale: {
+                    x: Consts.SoundVolume.Icon.Scale.X,
+                    y: Consts.SoundVolume.Icon.Scale.Y,
+                },
+            },
+
+            guage: {
+                pos: {
+                    x: Consts.SoundVolume.Guage.Pos.X,
+                    y: Consts.SoundVolume.Guage.Pos.Y,
+                },
+                size: {
+                    w: Consts.SoundVolume.Guage.Size.W,
+                    h: Consts.SoundVolume.Guage.Size.H,
+                },
+                color: {
+                    normal: Consts.SoundVolume.Guage.Color.NORMAL,
+                    disabled: Consts.SoundVolume.Guage.Color.DISABLED,
+                    bg: Consts.SoundVolume.GuageBg.COLOR,
+                }
+            },
+
+            handle: {
+                size: {
+                    w: Consts.SoundVolume.Handle.Size.W,
+                    h: Consts.SoundVolume.Handle.Size.H,
+                },
+                color: {
+                    normal: Consts.SoundVolume.Handle.Color.NORMAL,
+                    disabled: Consts.SoundVolume.Handle.Color.DISABLED,
+                    grabed: Consts.SoundVolume.Handle.Color.GRABED,
+                }
+            },
+
+            panel: {
+                pos: {
+                    x: Consts.SoundVolume.Panel.Pos.X,
+                    y: Consts.SoundVolume.Panel.Pos.Y,
+                },
+                size: {
+                    w: Consts.SoundVolume.Panel.Size.W,
+                    h: Consts.SoundVolume.Panel.Size.H,
+                },
+                color: {
+                    normal: Consts.SoundVolume.Panel.COLOR,
+                },
+            },
+        }
+        this.soundVolume = new SoundVolume(this, config);
     }
 
     private _setupDemo(): void {
