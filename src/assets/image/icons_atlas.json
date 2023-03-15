@@ -1,0 +1,333 @@
+{
+    "frames": [
+        {
+            "filename": "edit_w",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 0,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "play_w",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 48,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "erase_w",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 0,
+                "y": 48
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "erase_g",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 48,
+                "y": 48
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "ff_g",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 96,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "play_g",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 96,
+                "y": 48
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "ff_w",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 0,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "save_g",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 48,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "return_w",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 96,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "return_g",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 144,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "screenshot_g",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 144,
+                "y": 48
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "screenshot_w",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 144,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pause_g",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 0,
+                "y": 144
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pause_w",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 48,
+                "y": 144
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "save_w",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 96,
+                "y": 144
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "speeddown_g",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 144,
+                "y": 144
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "speeddown_w",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 192,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "speedup_g",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 192,
+                "y": 48
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "speedup_w",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 192,
+                "y": 96
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "clear_g",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 192,
+                "y": 144
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "clear_w",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 0,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "edit_g",
+            "frame": {
+                "w": 48,
+                "h": 48,
+                "x": 48,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "play_b_18",
+            "frame": {
+                "w": 18,
+                "h": 18,
+                "x": 96,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "play_g_18",
+            "frame": {
+                "w": 18,
+                "h": 18,
+                "x": 96,
+                "y": 210
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "play_on_18",
+            "frame": {
+                "w": 18,
+                "h": 18,
+                "x": 114,
+                "y": 192
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}
