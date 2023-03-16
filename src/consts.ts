@@ -1,3 +1,5 @@
+import { Localizable } from "./common/localizable";
+
 /**
  * 各種定数
  */
@@ -348,6 +350,13 @@ export const Consts = {
         },
     },
 
+    // 言語
+    Localizable: {
+        ENGLISH: 1,
+        JAPANEASE: 2,
+    },
+
+
     //アセット定義
     Assets: {
         //ベースディレクトリ
@@ -499,6 +508,34 @@ export const Consts = {
                 MP3: "audio/bgm/bgm.mp3",
                 OGG: "audio/bgm/bgm.ogg",
             }
-        }
+        },
+
+        //言語
+        Localizable: {
+            KEY: "localizable",
+            File: {
+                ENGLISH: "lang/lang-en.json",
+                JAPANEASE: "lang/lang-jp.json",
+                DEFAULT: "lang/lang-en.json",
+            },
+
+            Sentence: {
+                EDIT: "edit",
+                ERASE: "erase",
+                PLAY: "play",
+                PAUSE: "pause",
+                CLEAR: "clear",
+                SPEEDUP: "speedup",
+                SPEEDDOWN: "speeddown",
+                RETURN: "return",
+                SAVE: "save",
+                SCREENSHOT: "screenshot",
+                LETSPUT: "letsput",
+                LETSPLAY: "letsplay",
+                LETSWATCH: "letswatch",
+                EDITMODE: "editmode",
+                PLAYMODE: "playmode",
+            },
+        },
     },
 }

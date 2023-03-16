@@ -11,6 +11,7 @@ import { atsumaru_getVolume, atsumaru_isValid, atsumaru_onChangeVolume, atsumaru
 import { Globals } from "../globals";
 import { SoundVolume, SoundVolumeConfig } from "../common/sound-volume";
 import { LocalStorage } from "../common/local-storage";
+import { Localizable } from "../common/localizable";
 
 export class SceneMain extends Phaser.Scene {
 
@@ -28,6 +29,7 @@ export class SceneMain extends Phaser.Scene {
     private atsumaruSaveResult: number;
 
     private soundVolume: SoundVolume | null;
+    private localizable: Localizable | null;
 
 
     constructor() {
@@ -45,6 +47,7 @@ export class SceneMain extends Phaser.Scene {
         this.bgm = null;
 
         this.soundVolume = null;
+        this.localizable = null;
 
         this.atsumaruSaveResult = Consts.Atsumaru.CommStat.NONE;
     }
@@ -55,6 +58,7 @@ export class SceneMain extends Phaser.Scene {
     create() {
         this.cameras.main.setBackgroundColor(0x101010);
 
+        this._setupLocalizable();
         this._createControl();
         this._createUI();
         this._createUIBackGround();
@@ -94,6 +98,13 @@ export class SceneMain extends Phaser.Scene {
         }
     }
 
+
+
+    private _setupLocalizable(): void {
+        const localizableData = this.cache.json.get(Consts.Assets.Localizable.KEY);
+        this.localizable = new Localizable();
+        this.localizable.initialize(localizableData);
+    }
 
     private _createControl(): void {
         this.control = new Control(this);
@@ -155,16 +166,22 @@ export class SceneMain extends Phaser.Scene {
     }
 
     private _createUIMode(): void {
+        if (this.localizable == null) {
+            return;
+        }
+        const editMode = this.localizable.get(Consts.Assets.Localizable.Sentence.EDITMODE);
+        const playMode = this.localizable.get(Consts.Assets.Localizable.Sentence.PLAYMODE);
+
         const config: uiModeConfig = {
             x: Consts.Mode.Position.X,   //center pos
             y: Consts.Mode.Position.Y,    //center pos
             w: Consts.Mode.Size.W,
             h: Consts.Mode.Size.H,
             editModeColor: Consts.LifeGame.Cell.Color.OFF,
-            editModeText: "編集モード",
+            editModeText: editMode,
             editModeTextColor: Consts.LifeGame.Cell.Color.ON,
             showModeColor: Consts.LifeGame.Cell.Color.ON,
-            showModeText: "鑑賞モード",
+            showModeText: playMode,
             showModeTextColor: Consts.LifeGame.Cell.Color.OFF,
         };
         if (this.control !== null) {
@@ -185,8 +202,9 @@ export class SceneMain extends Phaser.Scene {
             text: "",
             textColor: 0xFFFFFF,
         };
-        if (this.control !== null) {
-            this.uiMessage = new uiMessage(this, this.control, config);
+        if (this.control !== null
+            && this.localizable !== null) {
+            this.uiMessage = new uiMessage(this, this.control, this.localizable, config);
         }
     }
 

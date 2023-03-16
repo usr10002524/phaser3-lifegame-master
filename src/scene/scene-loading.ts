@@ -3,6 +3,8 @@ import PostFXBlur from "../assets/pipelines/PostFXBlur";
 import { Globals } from "../globals";
 import { atsumaru_isValid, atsumaru_loadServerData } from "../atsumaru/atsumaru";
 import { LocalStorage } from "../common/local-storage";
+import { Localizable } from "../common/localizable";
+import { LocalizableConst } from "../common/localizable-const";
 
 export class SceneLoading extends Phaser.Scene {
 
@@ -41,6 +43,11 @@ export class SceneLoading extends Phaser.Scene {
         this.load.audioSprite(Consts.Assets.Audio.SE.NAME, Consts.Assets.Audio.SE.JSON,
             [Consts.Assets.Audio.SE.OGG, Consts.Assets.Audio.SE.MP3]);
         this.load.audio(Consts.Assets.Audio.BGM.NAME, [Consts.Assets.Audio.BGM.OGG, Consts.Assets.Audio.BGM.MP3]);
+
+        //言語
+        const localizableFile = LocalizableConst.GetLocalizableFile(Consts.Localizable.ENGLISH);
+        // const localizableFile = LocalizableConst.GetLocalizableFile(Consts.Localizable.JAPANEASE);
+        this.load.json(Consts.Assets.Localizable.KEY, localizableFile);
     }
 
     create(): void {
