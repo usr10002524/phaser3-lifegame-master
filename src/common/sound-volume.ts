@@ -62,6 +62,9 @@ export type SoundVolumeConfig = {
         color: {
             normal: number;
         };
+        alpha: {
+            normal: number;
+        };
     }
 };
 
@@ -131,7 +134,7 @@ export class SoundVolume {
 
         {
             this.panel = scene.add.rectangle(config.panel.pos.x, config.panel.pos.y,
-                config.panel.size.w, config.panel.size.h, config.panel.color.normal, 0.5);
+                config.panel.size.w, config.panel.size.h, config.panel.color.normal, config.panel.alpha.normal);
             this.panel.setDepth(Consts.SoundVolume.Panel.DEPTH);
             this.panel.setOrigin(0.0, 0.5);
             this.container.add(this.panel);

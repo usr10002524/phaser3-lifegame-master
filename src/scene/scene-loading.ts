@@ -1,7 +1,8 @@
 import { Consts } from "../consts";
 import PostFXBlur from "../assets/pipelines/PostFXBlur";
 import { Globals } from "../globals";
-import { atsumaru_loadServerData } from "../atsumaru/atsumaru";
+import { atsumaru_isValid, atsumaru_loadServerData } from "../atsumaru/atsumaru";
+import { LocalStorage } from "../common/local-storage";
 
 export class SceneLoading extends Phaser.Scene {
 
@@ -43,21 +44,7 @@ export class SceneLoading extends Phaser.Scene {
     }
 
     create(): void {
-        this.atsumaruLoadResult = Consts.Atsumaru.CommStat.NONE;
-        atsumaru_loadServerData((result: number, data: { key: string, value: string }[]) => {
-            this.atsumaruLoadResult = result;
-            console.log("Atsumaru ServerDataLoad result:" + result);
-
-            if (this.atsumaruLoadResult === Consts.Atsumaru.CommStat.SUCCESS) {
-                for (let i = 0; i < data.length; i++) {
-                    Globals.get().serverDataMan.set(data[i]);
-                }
-            }
-        });
-
-        // this.atsuServerDataLoad = new AtsumaruServerDataLoad();
-
-        // this.atsuServerDataLoad.load();
+        this._loadStart();
     }
 
     update(): void {
@@ -76,27 +63,36 @@ export class SceneLoading extends Phaser.Scene {
         }
 
         this.scene.start("Title");
+    }
 
-        // let wait = false;
-        // if (this.atsuServerDataLoad != null) {
-        //     const result = this.atsuServerDataLoad.check();
-        //     switch (result.stat) {
-        //         case AtsumaruConsts.CommStat.DURING: {
-        //             wait = true;
-        //             break;  //ロード中
-        //         }
-        //         case AtsumaruConsts.CommStat.SUCCESS: {
-        //             console.log("Atsumaru ServerDataLoad result:" + result.stat);
-        //             for (let i = 0; i < result.data.length; i++) {
-        //                 Globals.get().serverDataMan.set(result.data[i]);
-        //             }
-        //             break;
-        //         }
-        //     }
-        // }
+    private _loadStart(): void {
+        this.atsumaruLoadResult = Consts.Atsumaru.CommStat.NONE;
 
-        // if (!wait) {
-        //     this.scene.start("Title");
-        // }
+        if (atsumaru_isValid()) {
+            atsumaru_loadServerData((result: number, data: { key: string, value: string }[]) => {
+                this.atsumaruLoadResult = result;
+                console.log("Atsumaru ServerDataLoad result:" + result);
+
+                if (this.atsumaruLoadResult === Consts.Atsumaru.CommStat.SUCCESS) {
+                    for (let i = 0; i < data.length; i++) {
+                        Globals.get().serverDataMan.set(data[i]);
+                    }
+                }
+            });
+
+        }
+        else {
+            LocalStorage.loadLocalData((result: number, data: { key: string, value: string }[]) => {
+                this.atsumaruLoadResult = result;
+                console.log("loadLocalData result:" + result);
+
+                if (this.atsumaruLoadResult === Consts.Atsumaru.CommStat.SUCCESS) {
+                    for (let i = 0; i < data.length; i++) {
+                        Globals.get().serverDataMan.set(data[i]);
+                    }
+                }
+            });
+        }
+
     }
 }

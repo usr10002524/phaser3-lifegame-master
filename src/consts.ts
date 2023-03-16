@@ -329,6 +329,7 @@ export const Consts = {
                 H: 40,
             },
             COLOR: 0x404040,
+            ALPHA: 0.5,
             DEPTH: 1,
         },
     },

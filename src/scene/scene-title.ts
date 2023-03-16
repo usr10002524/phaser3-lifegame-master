@@ -1,4 +1,4 @@
-import { atsumaru_getVolume, atsumaru_onChangeVolume, atsumaru_screenshotHandler, atsumaru_setScreenshoScene } from "../atsumaru/atsumaru";
+import { atsumaru_getVolume, atsumaru_isValid, atsumaru_onChangeVolume, atsumaru_screenshotHandler, atsumaru_setScreenshoScene } from "../atsumaru/atsumaru";
 import { SoundVolume, SoundVolumeConfig } from "../common/sound-volume";
 import { Consts } from "../consts";
 import { Globals } from "../globals";
@@ -69,8 +69,6 @@ export class SceneTitle extends Phaser.Scene {
         this._createTimer();
         this._createSound();
         this._setupDemo();
-
-        this._createSoundVolume();
 
         //スクリーンショット撮影のシーン登録
         atsumaru_setScreenshoScene(this);
@@ -250,17 +248,23 @@ export class SceneTitle extends Phaser.Scene {
         this.se = this.sound.addAudioSprite(Consts.Assets.Audio.SE.NAME);
         this.bgm = this.sound.add(Consts.Assets.Audio.BGM.NAME);
 
-        //現在のボリュームを取得し設定
-        const volume = atsumaru_getVolume();
-        if (volume) {
-            // this._onChangeVolume(volume);
-            this.sound.volume = volume;
+        if (atsumaru_isValid()) {
+            //現在のボリュームを取得し設定
+            const volume = atsumaru_getVolume();
+            if (volume) {
+                // this._onChangeVolume(volume);
+                this.sound.volume = volume;
+            }
+            //ボリュームが変わったときのコールバックを設定
+            atsumaru_onChangeVolume((volume: number) => {
+                this.sound.volume = volume;
+                // console.log("_onChangeVolume volume:" + volume);
+            });
         }
-        //ボリュームが変わったときのコールバックを設定
-        atsumaru_onChangeVolume((volume: number) => {
-            this.sound.volume = volume;
-            // console.log("_onChangeVolume volume:" + volume);
-        });
+        else {
+            this._createSoundVolume();
+        }
+
 
         // this.bgm.play();
 
@@ -340,6 +344,9 @@ export class SceneTitle extends Phaser.Scene {
                 },
                 color: {
                     normal: Consts.SoundVolume.Panel.COLOR,
+                },
+                alpha: {
+                    normal: Consts.SoundVolume.Panel.ALPHA,
                 },
             },
         }

@@ -7,9 +7,10 @@ import { uiMode, uiModeConfig } from "../life-game/ui/ui-mode";
 import { uiString, uiStringConfig } from "../life-game/ui/ui-string";
 import { uiMessage } from "../life-game/ui/ui-message";
 import { uiSpeed, uiSpeedConfig } from "../life-game/ui/ui-speed";
-import { atsumaru_getVolume, atsumaru_onChangeVolume, atsumaru_saveServerData, atsumaru_setScreenshoScene } from "../atsumaru/atsumaru";
+import { atsumaru_getVolume, atsumaru_isValid, atsumaru_onChangeVolume, atsumaru_saveServerData, atsumaru_setScreenshoScene } from "../atsumaru/atsumaru";
 import { Globals } from "../globals";
 import { SoundVolume, SoundVolumeConfig } from "../common/sound-volume";
+import { LocalStorage } from "../common/local-storage";
 
 export class SceneMain extends Phaser.Scene {
 
@@ -64,8 +65,6 @@ export class SceneMain extends Phaser.Scene {
         this._createUITitle();
         this._createUISpeed();
         this._createSound();
-
-        this._createSoundVolume();
 
         //スクリーンショット撮影のシーン登録
         atsumaru_setScreenshoScene(this);
@@ -235,16 +234,21 @@ export class SceneMain extends Phaser.Scene {
         this.bgm = this.sound.add(Consts.Assets.Audio.BGM.NAME);
         this.bgm.play({ loop: true });
 
-        //現在のボリュームを取得し設定
-        const volume = atsumaru_getVolume();
-        if (volume) {
-            this.sound.volume = volume;
+        if (atsumaru_isValid()) {
+            //現在のボリュームを取得し設定
+            const volume = atsumaru_getVolume();
+            if (volume) {
+                this.sound.volume = volume;
+            }
+            //ボリュームが変わったときのコールバックを設定
+            atsumaru_onChangeVolume((volume: number) => {
+                this.sound.volume = volume;
+                // console.log("_onChangeVolume volume:" + volume);
+            });
         }
-        //ボリュームが変わったときのコールバックを設定
-        atsumaru_onChangeVolume((volume: number) => {
-            this.sound.volume = volume;
-            // console.log("_onChangeVolume volume:" + volume);
-        });
+        else {
+            this._createSoundVolume();
+        }
     }
 
     private _createSoundVolume(): void {
@@ -310,6 +314,9 @@ export class SceneMain extends Phaser.Scene {
                 color: {
                     normal: Consts.SoundVolume.Panel.COLOR,
                 },
+                alpha: {
+                    normal: Consts.SoundVolume.Panel.ALPHA,
+                },
             },
         }
         this.soundVolume = new SoundVolume(this, config);
@@ -322,10 +329,18 @@ export class SceneMain extends Phaser.Scene {
             //保存データ作成
             const saveData = Globals.get().serverDataMan.getDirtyValues();
             if (saveData.length > 0) {
-                atsumaru_saveServerData(saveData, (result: number) => {
-                    this.atsumaruSaveResult = result;
-                    console.log("Atsumaru ServerDataSave result:" + result);
-                });
+                if (atsumaru_isValid()) {
+                    atsumaru_saveServerData(saveData, (result: number) => {
+                        this.atsumaruSaveResult = result;
+                        console.log("Atsumaru ServerDataSave result:" + result);
+                    });
+                }
+                else {
+                    LocalStorage.saveLocalData(saveData, (result: number) => {
+                        this.atsumaruSaveResult = result;
+                        console.log("saveLocalData result:" + result);
+                    });
+                }
             }
             Globals.get().serverDataMan.clearDitry();
         }
