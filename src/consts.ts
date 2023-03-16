@@ -432,15 +432,28 @@ export const Consts = {
 
         //サウンド
         Audio: {
+            // ニコニコ
+            // SE: {
+            //     NAME: "se",
+            //     JSON: "audio/se/se.json",
+            //     MP3: "audio/se/se.mp3",
+            //     OGG: "audio/se/se.ogg",
+
+            //     START: "start",
+            //     SELECT: "over",
+            //     DECIDE: "on",
+            // },
+
+            // ニコニコ以外
             SE: {
                 NAME: "se",
-                JSON: "audio/se/se.json",
-                MP3: "audio/se/se.mp3",
-                OGG: "audio/se/se.ogg",
+                JSON: "audio/se2/se.json",
+                MP3: "audio/se2/se.mp3",
+                OGG: "audio/se2/se.ogg",
 
-                START: "start",
-                SELECT: "over",
-                DECIDE: "on",
+                START: "se_01_13",
+                SELECT: "se_01_12",
+                DECIDE: "se_01_26",
             },
 
             //BGM
