@@ -81,12 +81,14 @@ export class SoundVolume {
 
     private soundVolume: number;
     private clicked: boolean;
+    private isMute: boolean;
 
     constructor(scene: Phaser.Scene, config: SoundVolumeConfig) {
         this.scene = scene;
         this.config = config;
         this.soundVolume = 0.5;
         this.clicked = false;
+        this.isMute = this.scene.sound.mute;
 
         this.container = scene.add.container(config.pos.x, config.pos.y);
         this.container.setDepth(Consts.SoundVolume.Panel.DEPTH);
@@ -140,6 +142,12 @@ export class SoundVolume {
             this.container.add(this.panel);
         }
         this.container.sort('depth');
+
+        this._updateIcon();
+        this._updateGuageSize();
+        this._updateGuageColor();
+        this._updateHandlePos();
+        this._updateHandleColor();
     }
 
     public getMasterVolume(): number {
@@ -155,14 +163,15 @@ export class SoundVolume {
     }
 
     public setMasterVolumeMute(muteFlag: boolean): void {
-        this.scene.sound.mute = muteFlag;
+        this.isMute = muteFlag;
+        this.scene.sound.mute = this.isMute;
         this._updateIcon();
         this._updateGuageColor();
         this._updateHandleColor();
     }
 
     public isMasterVolumeMute(): boolean {
-        return this.scene.sound.mute;
+        return this.isMute;
     }
 
 

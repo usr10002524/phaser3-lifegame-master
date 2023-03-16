@@ -212,65 +212,6 @@ export const Consts = {
         DEPTH: 2,
     },
 
-    // //ボリューム表示
-    // SoundVolume: {
-    //     Base: {
-    //         Pos: {
-    //             X: 700,
-    //             Y: 560,
-    //         },
-    //     },
-    //     Icon: {
-    //         Pos: {
-    //             X: -56,
-    //             Y: 0,
-    //         },
-    //         DEPTH: 2,
-    //     },
-    //     Handle: {
-    //         Size: {
-    //             W: 15,
-    //             H: 35,
-    //         },
-    //         Color: {
-    //             NORMAL: 0xF0F0F0,
-    //             DISABLED: 0x808080,
-    //             GRABED: 0xA0A0A0,
-    //         },
-    //         DEPTH: 4,
-    //     },
-    //     Guage: {
-    //         Pos: {
-    //             X: -24,
-    //             Y: 0,
-    //         },
-    //         Size: {
-    //             W: 100,
-    //             H: 20,
-    //         },
-    //         Color: {
-    //             NORMAL: 0xFFFFFF,
-    //             DISABLED: 0x808080,
-    //         },
-    //         DEPTH: 3,
-    //     },
-    //     GuageBg: {
-    //         COLOR: 0x000000,
-    //         DEPTH: 2,
-    //     },
-    //     Panel: {
-    //         Pos: {
-    //             X: -92,
-    //             Y: 0,
-    //         },
-    //         Size: {
-    //             W: 184,
-    //             H: 48,
-    //         },
-    //         COLOR: 0x404040,
-    //         DEPTH: 1,
-    //     },
-    // },
     //ボリューム表示
     SoundVolume: {
         Base: {
