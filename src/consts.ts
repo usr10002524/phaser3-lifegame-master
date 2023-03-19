@@ -5,7 +5,7 @@ import { Localizable } from "./common/localizable";
  */
 export const Consts = {
     //version
-    VERSION: "202212141838",
+    VERSION: "202303161450",
 
     //画面サイズ
     Screen: {
