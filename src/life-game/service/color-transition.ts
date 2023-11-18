@@ -1,11 +1,14 @@
 import { LifeGame } from "../life-game";
 
+/**
+ * コンフィグ
+ */
 export type ColorTransitionConfig = {
-    row: number;
-    col: number;
-    colorFrom: number;
-    colorTo: number;
-    duration: number;
+    row: number;    // セルのY位置
+    col: number;    // セルのX位置
+    colorFrom: number;  // 遷移前の色
+    colorTo: number;    // 遷移後の色
+    duration: number;   // 遷移時間(ミリ秒)
 }
 
 //tweenによる色の変化を行うクラス
@@ -16,6 +19,12 @@ export class ColorTransition {
     private tween: Phaser.Tweens.Tween;
     private current: number;
 
+    /**
+     * コンストラクタ
+     * @param scene シーン
+     * @param lifeGame ライフゲーム
+     * @param config コンフィグ
+     */
     constructor(scene: Phaser.Scene, lifeGame: LifeGame, config: ColorTransitionConfig) {
         this.scene = scene;
         this.lifeGame = lifeGame;
@@ -34,26 +43,31 @@ export class ColorTransition {
         })
     }
 
+    // 遷移を停止させる
     kill(): void {
         this.tween.stop();
     }
 
+    // 開始時の処理
     private _onStart(): void {
         this.current = 0;
 
         this._draw();
     }
 
+    // 更新処理
     private _onUpdate(): void {
         this.current = this.tween.totalProgress;
         this._draw();
     }
 
+    // 完了時の処理
     private _onComplete(): void {
         this.current = 1;
         this._draw();
     }
 
+    // 色を線形補間する
     private _lerpColor(from: number, to: number, t: number): number {
         // agb に分解
         const from_r = ((from >> 16) & 0xff);
@@ -73,6 +87,7 @@ export class ColorTransition {
         return ret;
     }
 
+    // 表示処理
     private _draw(): void {
         //fillColor の色を算出
         const color = this._lerpColor(this.config.colorFrom, this.config.colorTo, this.current);

@@ -2,7 +2,9 @@ import { Control } from "../../control";
 import { Consts } from "../../../consts";
 import { uiButtonConfig } from "./ui-button-util";
 
-
+/**
+ * ボタンUIクラス
+ */
 export class uiButton {
     protected scene: Phaser.Scene;
     protected control: Control;
@@ -12,6 +14,12 @@ export class uiButton {
     protected se: Phaser.Sound.BaseSound;
     protected stat: number;
 
+    /**
+     * コンストラクタ
+     * @param scene シーン
+     * @param control コントローラ
+     * @param config コンフィグ
+     */
     constructor(scene: Phaser.Scene, control: Control, config: uiButtonConfig) {
         this.scene = scene;
         this.control = control;
@@ -33,10 +41,17 @@ export class uiButton {
         this.panel.on("pointerup", this._onUp, this);
     }
 
+    /**
+     * 更新処理
+     */
     update(): void {
 
     }
 
+    /**
+     * 
+     * @returns ボタンが有効な場合は true ,そうでない場合は false を返す。
+     */
     isEnable(): boolean {
         if (this.stat === Consts.Button.Stat.GRAY ||
             this.stat === Consts.Button.Stat.NONE) {
@@ -47,11 +62,20 @@ export class uiButton {
         }
     }
 
+    /**
+     * 位置を設定する
+     * @param x X座標
+     * @param y Y座標
+     */
     setPos(x: number, y: number): void {
         this.icon.setPosition(x, y);
         this.panel.setPosition(x, y);
     }
 
+    /**
+     * ボタンの有効、向こうを設定する
+     * @param flag 有効フラグ
+     */
     setActive(flag: boolean): void {
         this.icon.setActive(flag);
         this.panel.setActive(flag);
@@ -60,6 +84,10 @@ export class uiButton {
         this.panel.setVisible(flag);
     }
 
+    /**
+     * ステータスを変更する
+     * @param stat ステータス
+     */
     protected _changeStat(stat: number) {
         //ボタンの状態を更新
         const changed: boolean = (this.stat !== stat);
@@ -75,6 +103,10 @@ export class uiButton {
         }
     }
 
+    /**
+     * ボタンをON状態にする
+     * @param changed 変更フラグ
+     */
     protected _setOn(changed: boolean): void {
         if (!changed) {
             return;
@@ -83,6 +115,10 @@ export class uiButton {
         this.panel.setFillStyle(this.config.color.onColor);
     }
 
+    /**
+     * ボタンをOFF状態にする
+     * @param changed 変更フラグ
+     */
     protected _setOff(changed: boolean): void {
         if (!changed) {
             return;
@@ -91,6 +127,10 @@ export class uiButton {
         this.panel.setFillStyle(this.config.color.offColor);
     }
 
+    /**
+     * ボタンをマウスオーバー状態にする
+     * @param changed 変更フラグ
+     */
     protected _setOver(changed: boolean): void {
         if (!changed) {
             return;
@@ -99,6 +139,10 @@ export class uiButton {
         this.panel.setFillStyle(this.config.color.overColor);
     }
 
+    /**
+     * ボタンを無効状態にする
+     * @param changed 変更フラグ
+     */
     protected _setDisable(changed: boolean): void {
         if (!changed) {
             return;
@@ -108,22 +152,33 @@ export class uiButton {
     }
 
 
-
+    /**
+     * ボタンがマウスオーバー状態になった際の処理
+     */
     protected _onOver(): void {
         this._changeStat(Consts.Button.Stat.OVER);
         this.control.setMouseOverButton(this.config.type);
         // this.se.play(Consts.Assets.Audio.SE.SELECT);
     }
 
+    /**
+     * ボタンからマウスが出た際の処理
+     */
     protected _onOut(): void {
         this._changeStat(Consts.Button.Stat.OFF);
         this.control.setMouseOverButton(Consts.Button.Type.NONE);
     }
 
+    /**
+     * ボタンが押下された際の処理
+     */
     protected _onDown(): void {
         this._changeStat(Consts.Button.Stat.ON);
     }
 
+    /**
+     * ボタンから離された際の処理
+     */
     protected _onUp(): void {
         this._changeStat(Consts.Button.Stat.OFF);
         this.se.play(Consts.Assets.Audio.SE.DECIDE);

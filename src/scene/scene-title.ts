@@ -5,7 +5,9 @@ import { Globals } from "../globals";
 import { Control } from "../life-game/control";
 import { LifeGame, LifeGameConfig } from "../life-game/life-game";
 
-
+/**
+ * タイトルシーン
+ */
 export class SceneTitle extends Phaser.Scene {
 
     private panel: Phaser.GameObjects.Rectangle | null;
@@ -26,6 +28,9 @@ export class SceneTitle extends Phaser.Scene {
 
     private serverDataValidation: boolean;
 
+    /**
+     * コンストラクタ
+     */
     constructor() {
         super({ key: "Title" });
 
@@ -51,6 +56,9 @@ export class SceneTitle extends Phaser.Scene {
     preload() {
     }
 
+    /**
+     * 初期化
+     */
     create() {
         this.cameras.main.setBackgroundColor(0x101010);
         //グローバル変数をリセット(できるものだけ)
@@ -59,6 +67,7 @@ export class SceneTitle extends Phaser.Scene {
         //サーバデータの確認
         this.serverDataValidation = Globals.get().serverDataMan.has(Consts.Atsumaru.Data.KEY);
 
+        // 各種初期化
         this._createPanel();
         this._createTitle();
         this._createStart();
@@ -74,11 +83,17 @@ export class SceneTitle extends Phaser.Scene {
         atsumaru_setScreenshoScene(this);
     }
 
+    /**
+     * 更新処理
+     */
     update(): void {
         this.control?.update();
         this.lifeGame?.update();
     }
 
+    /**
+     * パネル初期化
+     */
     private _createPanel(): void {
         const x = this.game.canvas.width * 0.5;
         const y = 500;
@@ -98,6 +113,9 @@ export class SceneTitle extends Phaser.Scene {
         this.panel_c.setDepth(10);
     }
 
+    /**
+     * タイトル作成
+     */
     private _createTitle(): void {
         const x = this.game.canvas.width * 0.5;
         const y = 200;
@@ -106,6 +124,9 @@ export class SceneTitle extends Phaser.Scene {
         this.title.setDepth(11);
     }
 
+    /**
+     * スタートボタン作成
+     */
     private _createStart(): void {
         const x = this.game.canvas.width * 0.5;
         const y = 400;
@@ -131,6 +152,9 @@ export class SceneTitle extends Phaser.Scene {
         });
     }
 
+    /**
+     * Continue ボタン作成
+     */
     private _createContinue(): void {
         const x = this.game.canvas.width * 0.5;
         const y = 500;
@@ -181,6 +205,9 @@ export class SceneTitle extends Phaser.Scene {
         this.shade.setDepth(5);
     }
 
+    /**
+     * フェード開始
+     */
     private _onStartFade(): void {
         //更新を止める
         this.control?.onPause();
@@ -198,14 +225,23 @@ export class SceneTitle extends Phaser.Scene {
         })
     }
 
+    /**
+     * フェードアウト開始
+     */
     private _onFadeOut(): void {
         this._setupDemo();
     }
 
+    /**
+     * 制御クラス作成
+     */
     private _createControl(): void {
         this.control = new Control(this);
     }
 
+    /**
+     * デモ用のコアを作成
+     */
     private _createLifeGame(): void {
         const x = (this.game.canvas.width - Consts.LifeGame.Size.Middle.W) * 0.5
         const y = (this.game.canvas.height - Consts.LifeGame.Size.Middle.H) * 0.5
@@ -232,6 +268,9 @@ export class SceneTitle extends Phaser.Scene {
         }
     }
 
+    /**
+     * タイマーを作成
+     */
     private _createTimer(): void {
         //１分ごとにフェードアウト・フェードインする
         //フェードアウトのタイミングでパネルをリセット
@@ -243,6 +282,9 @@ export class SceneTitle extends Phaser.Scene {
         });
     }
 
+    /**
+     * サウンドの初期化
+     */
     private _createSound(): void {
 
         this.se = this.sound.addAudioSprite(Consts.Assets.Audio.SE.NAME);
@@ -282,6 +324,9 @@ export class SceneTitle extends Phaser.Scene {
 
     }
 
+    /**
+     * サウンドボリュームUIの作成
+     */
     private _createSoundVolume(): void {
         const config: SoundVolumeConfig = {
             pos: {
@@ -353,6 +398,9 @@ export class SceneTitle extends Phaser.Scene {
         this.soundVolume = new SoundVolume(this, config);
     }
 
+    /**
+     * デモの切り替え
+     */
     private _setupDemo(): void {
         const rows = Consts.LifeGame.Size.Middle.ROW;
         const cols = Consts.LifeGame.Size.Middle.COL;

@@ -13,10 +13,17 @@ import { SoundVolume, SoundVolumeConfig } from "../common/sound-volume";
 import { LocalStorage } from "../common/local-storage";
 import { Localizable } from "../common/localizable";
 
+/**
+ * メインシーン
+ */
 export class SceneMain extends Phaser.Scene {
 
+    // コアとUIのつなぎ
     private control: Control | null;
+    // ライフゲームコア
     private lifeGame: LifeGame | null;
+
+    // UI関連
     private ui: uiButtonManager | null;
     private uiGrid: uiGrid | null;
     private uiMode: uiMode | null;
@@ -24,14 +31,18 @@ export class SceneMain extends Phaser.Scene {
     private uiBackGround: Phaser.GameObjects.Image | null;
     private uiTitle: uiString | null;
     private uiSpeed: uiSpeed | null;
-
+    // サウンド関連
     private bgm: Phaser.Sound.BaseSound | null;
+    // サーバデータ
     private atsumaruSaveResult: number;
-
+    // サウンドボリューム
     private soundVolume: SoundVolume | null;
+    // ローカライズ
     private localizable: Localizable | null;
 
-
+    /**
+     * コンストラクタ
+     */
     constructor() {
         super({ key: "Main" });
 
@@ -55,9 +66,14 @@ export class SceneMain extends Phaser.Scene {
     preload() {
     }
 
+    /**
+     * 初期化
+     */
     create() {
+        // 背景色設定
         this.cameras.main.setBackgroundColor(0x101010);
 
+        // 各種初期化
         this._setupLocalizable();
         this._createControl();
         this._createUI();
@@ -74,8 +90,12 @@ export class SceneMain extends Phaser.Scene {
         atsumaru_setScreenshoScene(this);
     }
 
+    /**
+     * 更新処理
+     */
     update(): void {
 
+        // 各種更新処理
         this.control?.update();
         this.lifeGame?.update();
         this.ui?.update();
@@ -83,11 +103,13 @@ export class SceneMain extends Phaser.Scene {
         this.uiMessage?.update();
         this.uiSpeed?.update();
 
+        // タイトルに戻る指示が来ていれば、BGMを止めてタイトルシーンに戻る
         if (this.control?.isReturnTitle()) {
             this.bgm?.stop();
             this.scene.start("Title");
         }
 
+        // データ保存指示がきていれば、データの保存を行う
         if (this.control?.isDataSave()) {
             //保存ボタンが押された
             if (this.lifeGame) {
@@ -99,26 +121,36 @@ export class SceneMain extends Phaser.Scene {
     }
 
 
-
+    /**
+     * ローカライズの初期化
+     */
     private _setupLocalizable(): void {
         const localizableData = this.cache.json.get(Consts.Assets.Localizable.KEY);
         this.localizable = new Localizable();
         this.localizable.initialize(localizableData);
     }
 
+    /**
+     * 制御クラスの初期化
+     */
     private _createControl(): void {
         this.control = new Control(this);
     }
 
+    /**
+     * ライフゲームのコアを初期化
+     */
     private _createLifeGame(): void {
         //復帰用データが有るか確認
         let restoreData: string = "";
         let restored: boolean = false;
         if (Globals.get().continue) {
+            // タイトルでContinueが選択されていればロードしたデータを使用する
             restoreData = Globals.get().serverDataMan.get(Consts.Atsumaru.Data.KEY)
             restored = (restoreData.length > 0);
         }
 
+        // コアの初期化を行う
         const config: LifeGameConfig = {
             x: Consts.LifeGame.Position.X,
             y: Consts.LifeGame.Position.Y,
@@ -141,12 +173,14 @@ export class SceneMain extends Phaser.Scene {
         }
     }
 
+    // ボタンUIを作成
     private _createUI(): void {
         if (this.control !== null) {
             this.ui = new uiButtonManager(this, this.control);
         }
     }
 
+    // グリッドを作成
     private _createGrid(): void {
 
         const cell_w = Consts.LifeGame.Size.Middle.W / Consts.LifeGame.Size.Middle.ROW;
@@ -165,6 +199,7 @@ export class SceneMain extends Phaser.Scene {
         this.uiGrid = new uiGrid(this, config);
     }
 
+    // モード選択UIを作成
     private _createUIMode(): void {
         if (this.localizable == null) {
             return;
@@ -189,6 +224,7 @@ export class SceneMain extends Phaser.Scene {
         }
     }
 
+    // メッセージ部分のUIを作成
     private _createUIMessage(): void {
         const config: uiStringConfig = {
             x: Consts.Message.Position.X,
@@ -208,6 +244,7 @@ export class SceneMain extends Phaser.Scene {
         }
     }
 
+    // タイトル部分のUIを作成
     private _createUITitle(): void {
         const config: uiStringConfig = {
             x: Consts.Title.Position.X, //center pos
@@ -224,6 +261,7 @@ export class SceneMain extends Phaser.Scene {
         this.uiTitle = new uiString(this, config);
     }
 
+    // 進行速度変更のUIを作成
     private _createUISpeed(): void {
         const config: uiSpeedConfig = {
             x: Consts.Speed.Position.x,
@@ -242,12 +280,14 @@ export class SceneMain extends Phaser.Scene {
         }
     }
 
+    // 背景を作成
     private _createUIBackGround(): void {
         this.uiBackGround = this.add.image(0, 0, Consts.Assets.Graphic.Base.NAME);
         this.uiBackGround.setOrigin(0, 0);
         this.uiBackGround.setDepth(Consts.Base.DEPTH);
     }
 
+    // サウンドを初期化
     private _createSound(): void {
         this.bgm = this.sound.add(Consts.Assets.Audio.BGM.NAME);
         this.bgm.play({ loop: true });
@@ -265,10 +305,12 @@ export class SceneMain extends Phaser.Scene {
             });
         }
         else {
+            // AtsumaruAPIが使用できない場合は、サウンドボリューム変更UIを作成
             this._createSoundVolume();
         }
     }
 
+    // サウンドボリューム変更UIを作成
     private _createSoundVolume(): void {
         const config: SoundVolumeConfig = {
             pos: {
@@ -340,11 +382,13 @@ export class SceneMain extends Phaser.Scene {
         this.soundVolume = new SoundVolume(this, config);
     }
 
+    // データの保存を行う
     private _saveData(): void {
         this.atsumaruSaveResult = Consts.Atsumaru.CommStat.NONE;
         if (this.lifeGame) {
 
-            //保存データ作成
+            // 保存データ作成
+            // 更新のあったデータを取得
             const saveData = Globals.get().serverDataMan.getDirtyValues();
             if (saveData.length > 0) {
                 if (atsumaru_isValid()) {

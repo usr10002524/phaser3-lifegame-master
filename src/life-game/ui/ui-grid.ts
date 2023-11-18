@@ -1,5 +1,8 @@
 import { Consts } from "../../consts";
 
+/**
+ * コンフィグ
+ */
 export type uiGridConfig = {
     x: number,
     y: number,
@@ -11,11 +14,19 @@ export type uiGridConfig = {
     color: number;
 }
 
+/**
+ * グリッドUIクラス
+ */
 export class uiGrid {
     private scene: Phaser.Scene;
     private config: uiGridConfig;
     private grid: Phaser.GameObjects.Graphics;
 
+    /**
+     * コンストラクタ
+     * @param scene シーン
+     * @param config コンフィグ
+     */
     constructor(scene: Phaser.Scene, config: uiGridConfig) {
         this.scene = scene;
         this.config = config;
@@ -24,7 +35,9 @@ export class uiGrid {
         this._initGrid();
     }
 
-
+    /**
+     * グリッドの初期化
+     */
     private _initGrid() {
         const orig_x = this.config.x;
         const orig_y = this.config.y;

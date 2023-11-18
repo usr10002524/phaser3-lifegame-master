@@ -3,6 +3,9 @@ import { ColorTransition } from "./service/color-transition";
 import { Control } from "./control";
 import { Consts } from "../consts";
 
+/**
+ * コンフィグ
+ */
 export type LifeGameConfig = {
     core: CoreConfig;   //コアのコンフィグ
 
@@ -23,7 +26,9 @@ export type LifeGameConfig = {
 
 
 
-
+/**
+ * ライフゲームクラス
+ */
 export class LifeGame {
 
     private scene: Phaser.Scene;    //シーン

@@ -6,6 +6,9 @@ import { LocalStorage } from "../common/local-storage";
 import { Localizable } from "../common/localizable";
 import { LocalizableConst } from "../common/localizable-const";
 
+/**
+ * ローディング中シーン
+ */
 export class SceneLoading extends Phaser.Scene {
 
     private atsumaruLoadResult: number;
@@ -60,7 +63,7 @@ export class SceneLoading extends Phaser.Scene {
                 //ロード中
                 return;
 
-            case Consts.Atsumaru.CommStat.DURING:
+            case Consts.Atsumaru.CommStat.SUCCESS:
                 //成功
                 break;
 
@@ -72,10 +75,14 @@ export class SceneLoading extends Phaser.Scene {
         this.scene.start("Title");
     }
 
+    /**
+     * データロード開始
+     */
     private _loadStart(): void {
         this.atsumaruLoadResult = Consts.Atsumaru.CommStat.NONE;
 
         if (atsumaru_isValid()) {
+            // AtsumaruAPI が有効な時はそちらからデータをロードする
             atsumaru_loadServerData((result: number, data: { key: string, value: string }[]) => {
                 this.atsumaruLoadResult = result;
                 console.log("Atsumaru ServerDataLoad result:" + result);
@@ -89,6 +96,7 @@ export class SceneLoading extends Phaser.Scene {
 
         }
         else {
+            // AtsumaruAPI が使用できない場合は、localStorage からデータをロードする
             LocalStorage.loadLocalData((result: number, data: { key: string, value: string }[]) => {
                 this.atsumaruLoadResult = result;
                 console.log("loadLocalData result:" + result);

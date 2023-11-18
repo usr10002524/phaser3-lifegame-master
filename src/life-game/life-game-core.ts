@@ -33,6 +33,9 @@ export class UpdateCellInfo {
 //     },
 // }
 
+/**
+ * セルの状態クラス
+ */
 class Cell {
 
     private stat: number;       //セルの状態(CoreConsts.Cell.Stat)
@@ -53,6 +56,9 @@ class Cell {
 
 }
 
+/**
+ * コアクラス
+ */
 export class Core {
 
     private config: CoreConfig;     //コンフィグ
@@ -129,6 +135,10 @@ export class Core {
         }
     }
 
+    /**
+     * 全体の生存セル数を取得する
+     * @returns 生存セル数
+     */
     getAliveCount(): number {
         let count = 0;
 
@@ -229,6 +239,7 @@ export class Core {
         return index;
     }
 
+    // 指定したセルの次の状態を取得する
     protected _nextStat(row: number, col: number): number {
         //周囲の生存セル数を取得
         const aliveCount = this._getNeighborAliveCount(row, col);
@@ -266,6 +277,7 @@ export class Core {
         return Consts.LifeGame.Cell.Stat.NONE;
     }
 
+    // 指定したセルの周囲の生存セル数を取得する
     protected _getNeighborAliveCount(row: number, col: number) {
         //周囲のセルのインデックス
         const indices: number[][] = [

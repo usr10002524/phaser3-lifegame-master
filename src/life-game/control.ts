@@ -1,20 +1,29 @@
-
 import { Consts } from "../consts";
 
+/**
+ * UIなどからの入力を制御するクラス
+ */
 export class Control {
 
+    // シーン
     private scene: Phaser.Scene;
+    // 再生モード
     private playBack: number;
+    // 編集モード
     private editMode: number;
+    // 進行速度
     private speed: number;
+    // 各種フラグ
     private gameReset: boolean;
     private returnTitle: boolean;
     private saveData: boolean;
 
+    // 各種文字列（デバッグ用）
     private textPlayBack: Phaser.GameObjects.Text;
     private textEditMode: Phaser.GameObjects.Text;
     private textSpeed: Phaser.GameObjects.Text;
 
+    // 各種入力フラグ
     private statEdit: boolean;
     private statErase: boolean;
     private statPlay: boolean;
@@ -26,6 +35,7 @@ export class Control {
     private statSave: boolean;
     private statScreenShot: boolean;
 
+    // 各種イベントリスナー
     private keyEdit: Phaser.Input.Keyboard.Key;
     private keyErase: Phaser.Input.Keyboard.Key;
     private keyPlay: Phaser.Input.Keyboard.Key;
@@ -37,9 +47,15 @@ export class Control {
     private keySave: Phaser.Input.Keyboard.Key;
     private keyScreenShot: Phaser.Input.Keyboard.Key;
 
+    // マウスが乗っているボタン
     private mouseOverButton: number;
+    // 生存セル数
     private aliveCellCount: number;
 
+    /**
+     * コンストラクタ
+     * @param scene シーン
+     */
     constructor(scene: Phaser.Scene) {
         this.scene = scene;
         this.playBack = Consts.Control.PlayBack.STOP;
@@ -99,34 +115,65 @@ export class Control {
         this.aliveCellCount = 0;
     }
 
+    /**
+     * 更新処理
+     */
     update(): void {
         this._checkKeys();
     }
 
+    /**
+     * リセットボタンが押されたかどうか取得する
+     * @returns リセットボタンが押されたかどうか
+     */
     isGameReset(): boolean {
         return this.gameReset;
     }
 
+    /**
+     * タイトルに戻るボタンが押されたかどうか取得する
+     * @returns タイトルに戻るボタンが押されたかどうか
+     */
     isReturnTitle(): boolean {
         return this.returnTitle;
     }
 
+    /**
+     * セーブボタンが押されたかどうかを取得する
+     * @returns セーブボタンが押されたかどうか
+     */
     isDataSave(): boolean {
         return this.saveData;
     }
 
+    /**
+     * 再生モードを取得する
+     * @returns 再生モード
+     */
     getPlayBack(): number {
         return this.playBack;
     }
 
+    /**
+     * 編集モードを取得する
+     * @returns 編集モード
+     */
     getEditMode(): number {
         return this.editMode;
     }
 
+    /**
+     * 進行速度を取得する
+     * @returns 進行速度
+     */
     getSpeed(): number {
         return this.speed;
     }
 
+    /**
+     * 進行速度を設定する
+     * @param speed 進行速度
+     */
     setSpeed(speed: number): void {
         this.speed = speed;
     }
@@ -167,6 +214,7 @@ export class Control {
         return this.aliveCellCount;
     }
 
+    // 入力を確認
     private _checkKeys(): void {
 
         //チェック前にやることはここで
@@ -233,6 +281,7 @@ export class Control {
         this._resetStat();
     }
 
+    // 入力状態をリセットする
     private _resetStat(): void {
         this.statEdit = false;
         this.statErase = false;
@@ -246,6 +295,7 @@ export class Control {
         this.statScreenShot = false;
     }
 
+    // 表示テキストを更新する
     private _setText(): void {
         // let strPlayBack: string = "";
         // let strEditMode: string = "";

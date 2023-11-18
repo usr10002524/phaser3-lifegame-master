@@ -1,5 +1,12 @@
 import { Consts } from "../consts";
 
+/**
+ * サウンドテスト
+ */
+
+/**
+ * リストの内容
+ */
 class ListContent {
     key: string;
     marker: string;
@@ -14,13 +21,23 @@ class ListContent {
     }
 }
 
+/**
+ * サウンドデータクラス
+ */
 class SoundData {
     markers: Set<string>;
 
+    /**
+     * コンストラクタ
+     */
     constructor() {
         this.markers = new Set<string>();
     }
 
+    /**
+     * マーカーを追加する
+     * @param marker マーカー名
+     */
     addMarker(marker: string): void {
         if (this.markers.has(marker)) {
             return;
@@ -29,13 +46,23 @@ class SoundData {
     }
 }
 
+/**
+ * サウンドリストクラス
+ */
 class SoundList {
     soundList: Map<string, SoundData>;
 
+    /**
+     * コンストラクタ
+     */
     constructor() {
         this.soundList = new Map<string, SoundData>();
     }
 
+    /**
+     * サウンドリストにキーを追加する
+     * @param key キー
+     */
     addKey(key: string): void {
         if (this.soundList.has(key)) {
             return;
@@ -45,6 +72,11 @@ class SoundList {
         }
     }
 
+    /**
+     * キーに対してマーカーを追加する
+     * @param key マーカーを追加する対象のキー
+     * @param marker マーカー
+     */
     addMarker(key: string, marker: string): void {
         this.addKey(key);
         if (this.soundList.has(key)) {
@@ -53,6 +85,10 @@ class SoundList {
         }
     }
 
+    /**
+     * リスト内容を取得する
+     * @returns リスト内容の配列
+     */
     getContent(): ListContent[] {
         const content: ListContent[] = [];
 
@@ -71,7 +107,9 @@ class SoundList {
     }
 }
 
-
+/**
+ * サウンドテストシーン
+ */
 export class SceneSoundTest extends Phaser.Scene {
 
     private soundList: SoundList;
@@ -82,6 +120,7 @@ export class SceneSoundTest extends Phaser.Scene {
     private textMute: Phaser.GameObjects.Text | null;
     private index: number;
 
+    // 各種キーイベントリスナー
     private keyPlay: Phaser.Input.Keyboard.Key | null;
     private keyStop: Phaser.Input.Keyboard.Key | null;
     private keyNext: Phaser.Input.Keyboard.Key | null;
@@ -92,10 +131,16 @@ export class SceneSoundTest extends Phaser.Scene {
     private keyShift: Phaser.Input.Keyboard.Key | null;
     private keyAlt: Phaser.Input.Keyboard.Key | null;
 
+    // サウンドボリューム
     private soundVolume: number;
+    // ミュートフラグ
     private muted: boolean;
+    // ボリューム変更対象 true のときはマスターボリューム、false のときは個別ボリューム
     private targetMasterVolume: boolean;
 
+    /**
+     * コンストラクタ
+     */
     constructor() {
         super({ key: "SoundTest" });
 
@@ -122,6 +167,9 @@ export class SceneSoundTest extends Phaser.Scene {
         this.targetMasterVolume = false;
     }
 
+    /**
+     * データロード
+     */
     preload(): void {
         // this.load.audio(Consts.Assets.Audio.Start.NAME, [Consts.Assets.Audio.Start.OGG, Consts.Assets.Audio.Start.MP3]);
         // this.load.audio(Consts.Assets.Audio.Select.NAME, [Consts.Assets.Audio.Select.OGG, Consts.Assets.Audio.Select.MP3]);
@@ -132,6 +180,9 @@ export class SceneSoundTest extends Phaser.Scene {
 
     }
 
+    /**
+     * 初期化
+     */
     create(): void {
         //サウンドリストの設定
         // this.soundList.addKey(Consts.Assets.Audio.Start.NAME);
@@ -183,10 +234,17 @@ export class SceneSoundTest extends Phaser.Scene {
 
     }
 
+    /**
+     * マスターボリュームに反映させる
+     * @param volume マスターボリュームに設定する値(0-100)
+     */
     private _applyMasterVolume(volume: number): void {
         this.sound.volume = (volume / 100);
     }
 
+    /**
+     * 表示テキストを設定する
+     */
     private _setText(): void {
         let currentVolume = 0;
         if (this.coundContent.length > this.index) {
@@ -212,6 +270,9 @@ export class SceneSoundTest extends Phaser.Scene {
         this.textMute?.setText("MUTE:" + this.muted + "     tggle:'7'key");
     }
 
+    /**
+     * サウンドを再生する
+     */
     private _onPlay(): void {
         if (this.coundContent.length > this.index) {
             const data = this.coundContent[this.index];
@@ -225,10 +286,16 @@ export class SceneSoundTest extends Phaser.Scene {
         }
     }
 
+    /**
+     * サウンドを停止する
+     */
     private _onStop(): void {
         this.sound.stopAll();
     }
 
+    /**
+     * 次のサウンドに切り替える
+     */
     private _onNext(): void {
         this.index++;
         if (this.index >= this.coundContent.length) {
@@ -237,6 +304,9 @@ export class SceneSoundTest extends Phaser.Scene {
         this._setText();
     }
 
+    /**
+     * 前のサウンドに切り替える
+     */
     private _onPrev(): void {
         if (this.index > 0) {
             this.index--;
@@ -252,6 +322,9 @@ export class SceneSoundTest extends Phaser.Scene {
         this._setText();
     }
 
+    /**
+     * ボリュームを上げる
+     */
     private _onVolUp(): void {
         let val = 1;
         if (this.keyShift?.isDown) {
@@ -270,6 +343,9 @@ export class SceneSoundTest extends Phaser.Scene {
         this._setText();
     }
 
+    /**
+     * ボリュームを下げる
+     */
     private _onVolDown(): void {
         let val = 1;
         if (this.keyShift?.isDown) {
@@ -286,12 +362,18 @@ export class SceneSoundTest extends Phaser.Scene {
         this._setText();
     }
 
+    /**
+     * ミュートの設定、解除を切り替える
+     */
     private _onMute(): void {
         this.muted = !this.muted;
         this.sound.mute = this.muted;
         this._setText();
     }
 
+    /**
+     * ボリュームの設定対象を切り替える
+     */
     private _onAlt(): void {
         this.targetMasterVolume = !this.targetMasterVolume;
         this._setText();

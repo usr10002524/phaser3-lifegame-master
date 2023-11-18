@@ -1,6 +1,9 @@
 import { Consts } from "../../consts";
 import { Control } from "../control";
 
+/**
+ * コンフィグ
+ */
 export type uiSpeedConfig = {
     x: number,
     y: number,
@@ -13,6 +16,9 @@ export type uiSpeedConfig = {
     onIcon: string,
 }
 
+/**
+ * 進行速度UIクラス
+ */
 export class uiSpeed {
     private scene: Phaser.Scene;
     private control: Control;
@@ -21,7 +27,12 @@ export class uiSpeed {
     private playback: number;
     private speed: number;
 
-
+    /**
+     * コンストラクタ
+     * @param scene シーン
+     * @param control コントローラ
+     * @param config コンフィグ
+     */
     constructor(scene: Phaser.Scene, control: Control, config: uiSpeedConfig) {
         this.scene = scene;
         this.control = control;
@@ -34,6 +45,9 @@ export class uiSpeed {
         this._updateIcons();
     }
 
+    /**
+     * 更新処理
+     */
     update(): void {
 
         const playback = this.control.getPlayBack();
@@ -48,7 +62,9 @@ export class uiSpeed {
     }
 
 
-
+    /**
+     * アイコン初期化
+     */
     private _initIcons(): void {
         for (let i = 0; i < this.config.count; i++) {
             const x = this.config.x + (this.config.pad_x * i);
@@ -61,6 +77,9 @@ export class uiSpeed {
         }
     }
 
+    /**
+     * アイコン更新
+     */
     private _updateIcons() {
         if (this.playback === Consts.Control.PlayBack.PLAY) {
             const enableCount = Math.min(this.speed - Consts.Control.Speed.MIN + 1, this.config.count);

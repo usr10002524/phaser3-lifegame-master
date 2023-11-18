@@ -1,6 +1,9 @@
 import { Control } from "../control";
 import { Consts } from "../../consts";
 
+/**
+ * コンフィグ
+ */
 export type uiModeConfig = {
     x: number;
     y: number;
@@ -16,6 +19,9 @@ export type uiModeConfig = {
     showModeColor: number;
 }
 
+/**
+ * 再生モードUIクラス
+ */
 export class uiMode {
     private scene: Phaser.Scene;
     private control: Control;
@@ -24,6 +30,12 @@ export class uiMode {
     private text: Phaser.GameObjects.Text;
     private playback: number;
 
+    /**
+     * コンストラクタ
+     * @param scene シーン
+     * @param control コントローラ
+     * @param config コンフィグ
+     */
     constructor(scene: Phaser.Scene, control: Control, config: uiModeConfig) {
         this.scene = scene;
         this.control = control;
@@ -46,6 +58,9 @@ export class uiMode {
         this._updatePanel();
     }
 
+    /**
+     * 更新処理
+     */
     update(): void {
         const playback = this.control.getPlayBack();
         if (this.playback !== playback) {
@@ -55,7 +70,9 @@ export class uiMode {
     }
 
 
-
+    /**
+     * パネル表示更新
+     */
     private _updatePanel(): void {
         //パネルを変更
         switch (this.playback) {

@@ -1,5 +1,8 @@
 import { Consts } from "../../../consts";
 
+/**
+ * ボタンイメージ情報
+ */
 export type uiButtonImages = {
     atlas: string;
     offIcon: string;
@@ -8,6 +11,9 @@ export type uiButtonImages = {
     disableIcon: string;
 }
 
+/**
+ * ボタン色情報
+ */
 export type uiButtonColor = {
     offColor: number;
     onColor: number;
@@ -15,6 +21,9 @@ export type uiButtonColor = {
     disableColor: number;
 }
 
+/**
+ * ボタン設定
+ */
 export type uiButtonConfig = {
     type: number;
     images: uiButtonImages;
@@ -27,6 +36,9 @@ export type uiButtonConfig = {
     }
 }
 
+/**
+ * ボタンUIユーティリティ
+ */
 export class uiButtonUtil {
 
     static getDefaultButtonConfig(): uiButtonConfig {

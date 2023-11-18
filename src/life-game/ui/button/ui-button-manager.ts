@@ -8,11 +8,19 @@ import { Consts } from "../../../consts";
 import { uiButtonConfig } from "./ui-button-util";
 import { uiButtonUtil } from "./ui-button-util";
 
+/**
+ * ボタンUI管理クラス
+ */
 export class uiButtonManager {
 
+    // シーン
     private scene: Phaser.Scene;
+    // コントローラ
     private control: Control;
+    // 再生モード
     private playback: number;
+
+    // 各種ボタン
     private buttonPlay: uiButtonPlay;
     private buttonPause: uiButtonPause;
     private buttonEdit: uiButtonEdit;
@@ -24,12 +32,16 @@ export class uiButtonManager {
     private buttonSave: uiButtonSave;
     private buttonScreenShot: uiButtonScreenShot;
 
-
+    /**
+     * コンストラクタ
+     * @param scene シーン
+     * @param control コントローラ
+     */
     constructor(scene: Phaser.Scene, control: Control) {
         this.scene = scene;
         this.control = control;
 
-        //各ボタンの生成
+        //各ボタンの生成　このへんもうちょっとうまくやりたい
         //PLAY
         {
             const config: uiButtonConfig = {
@@ -136,13 +148,19 @@ export class uiButtonManager {
         this._replace();
     }
 
+    /**
+     * 更新処理
+     */
     update() {
+        // 再生モードの監視
+        // 再生モードが変更された場合、メニューのボタンを入れ替える
         const playback = this.control.getPlayBack();
         if (this.playback !== playback) {
             this.playback = playback;
             this._replace();
         }
 
+        // 各種ボタンの更新処理
         this.buttonPlay.update();
         this.buttonPause.update();
         this.buttonEdit.update();
@@ -155,6 +173,9 @@ export class uiButtonManager {
         this.buttonScreenShot.update();
     }
 
+    /**
+     * 再生モードごとにボタンを入れ替える
+     */
     private _replace(): void {
         let row: number = 0;
 

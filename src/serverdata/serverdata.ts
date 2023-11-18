@@ -1,22 +1,37 @@
-
+/**
+ * データ1つあたりのデータ
+ */
 export type ServerData = {
     key: string;
     value: string;
 }
 
+/**
+ * 内部データ
+ */
 type innerSaverData = {
     value: string;
     dirty: boolean;
 }
 
+/**
+ * サーバデータマネージャ
+ */
 export class ServerDataManager {
 
     private serverData: Map<string, innerSaverData>;
 
+    /**
+     * コンストラクタ
+     */
     constructor() {
         this.serverData = new Map<string, innerSaverData>();
     }
 
+    /**
+     * 更新データをセットする
+     * @param data 更新したいデータ
+     */
     set(data: ServerData): void {
 
         if (this.serverData.has(data.key)) {
@@ -33,6 +48,11 @@ export class ServerDataManager {
         this.serverData.set(data.key, innerData);
     }
 
+    /**
+     * サーバデータを取得する
+     * @param key 首都するデータのキー
+     * @returns サーバデータ
+     */
     get(key: string): string {
         const data = this.serverData.get(key);
         if (data) {
@@ -43,10 +63,19 @@ export class ServerDataManager {
         }
     }
 
+    /**
+     * キーが存在するかチェックする
+     * @param key キー
+     * @returns キーが存在する場合は true 、そうでない場合は
+     */
     has(key: string): boolean {
         return this.serverData.has(key);
     }
 
+    /**
+     * 更新フラグの立っているデータを取得する
+     * @returns サーバーデータの配列
+     */
     getDirtyValues(): ServerData[] {
         let data: ServerData[] = [];
 
@@ -59,6 +88,9 @@ export class ServerDataManager {
         return data;
     }
 
+    /**
+     * 更新フラグをクリアする
+     */
     clearDitry(): void {
         this.serverData.forEach((value: innerSaverData, key: string) => {
             value.dirty = false;

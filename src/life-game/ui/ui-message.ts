@@ -3,6 +3,9 @@ import { Consts } from "../../consts";
 import { uiString, uiStringConfig } from "./ui-string";
 import { Localizable } from "../../common/localizable";
 
+/**
+ * メッセージUIクラス
+ */
 export class uiMessage extends uiString {
 
     private control: Control;
@@ -11,6 +14,13 @@ export class uiMessage extends uiString {
     private noMessageTimer: Phaser.Time.TimerEvent;
     private timerConfig: Phaser.Types.Time.TimerEventConfig;
 
+    /**
+     * コンストラクタ
+     * @param scene シーン
+     * @param control コントローラ
+     * @param localizable ローカライズ
+     * @param config コンフィグ
+     */
     constructor(scene: Phaser.Scene, control: Control, localizable: Localizable, config: uiStringConfig) {
         super(scene, config);
         this.control = control;
@@ -26,12 +36,18 @@ export class uiMessage extends uiString {
         // this.noMessageTimer.paused = true;
     }
 
+    /**
+     * 更新処理
+     */
     update(): void {
 
         this.mouseOverButton = this.control.getMouseOverButton();
         this._updateMessage();
     }
 
+    /**
+     * メッセージ更新処理
+     */
     private _updateMessage(): void {
         let message: string = "";
 
@@ -81,7 +97,9 @@ export class uiMessage extends uiString {
                 message = this.localizable.get(Consts.Assets.Localizable.Sentence.SCREENSHOT);    //"スクリーンショットを投稿します";
                 break;
 
+            // マウスオーバー以外の処理
             default: {
+                // 一定時間ごとにメッセージを切り替え
                 if (this.noMessageTimer.paused) {
                     this.noMessageTimer.remove();
                     this.noMessageTimer = this.scene.time.addEvent(this.timerConfig);

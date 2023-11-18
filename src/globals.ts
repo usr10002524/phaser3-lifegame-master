@@ -1,5 +1,8 @@
 import { ServerDataManager } from "./serverdata/serverdata";
 
+/**
+ * グローバルで使用する変数
+ */
 export class Globals {
 
     //シングルトンで使用するインスタンス
@@ -14,7 +17,9 @@ export class Globals {
     }
 
     //--------------------------------------------
+    // サーバデータ
     serverDataMan: ServerDataManager;
+    // タイトルで「CONTINUE」を選んだかどうか
     continue: boolean;
 
 
