@@ -1,9 +1,10 @@
-import { Consts } from "../consts";
-
 /**
  * AtsumaruAPI が使えない場合、javascript の LocalStrage を使う。
  * AtsumaruAPI と同等に使えるよう、関数名、引数などは同じようにしておく。
  */
+
+import { Consts } from "../consts";
+
 
 // LocalStrage アイテム１つあたりのデータ
 export type LocalStorageItem = {

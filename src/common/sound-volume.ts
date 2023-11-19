@@ -1,8 +1,8 @@
-import { Consts } from "../consts";
-
 /**
  * AtumaruApi が使えない場合、代替で使用するサウンドボリューム変更UIを制御する
  */
+
+import { Consts } from "../consts";
 
 /**
  * サウンドボリュームUIの表示用各種設定
