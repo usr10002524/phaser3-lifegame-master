@@ -48,8 +48,8 @@ export class SceneLoading extends Phaser.Scene {
         this.load.audio(Consts.Assets.Audio.BGM.NAME, [Consts.Assets.Audio.BGM.OGG, Consts.Assets.Audio.BGM.MP3]);
 
         //言語
-        const localizableFile = LocalizableConst.GetLocalizableFile(Consts.Localizable.ENGLISH);
-        // const localizableFile = LocalizableConst.GetLocalizableFile(Consts.Localizable.JAPANEASE);
+        // const localizableFile = LocalizableConst.GetLocalizableFile(Consts.Localizable.ENGLISH);
+        const localizableFile = LocalizableConst.GetLocalizableFile(Consts.Localizable.JAPANEASE);
         this.load.json(Consts.Assets.Localizable.KEY, localizableFile);
     }
 
